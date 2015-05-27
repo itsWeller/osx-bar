@@ -31,9 +31,7 @@ now = str(strftime("%I:%M"))
 hostname = " chris@air.local"
 
 # Battery left
-battery = os.popen("pmset -g batt " + "|" + 
-                   "egrep '([0-9]+\%).*' -o --colour=auto " + "|" +
-                   "cut -f1 -d';'").read().strip()
+battery = os.popen("pmset -g batt | grep -o '[0-9]*%'").read().strip()
 
 build_segment(left, " chris@air.local")
 build_segment(center, song_info['artist']+' // '+song_info['title'])
