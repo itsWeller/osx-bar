@@ -23,6 +23,10 @@ def build_bar(left=left, center=center, right=right, title_bar=title_bar):
 client = MPDClient()
 client.connect("localhost",6600)
 song_info = client.currentsong()
+try:
+    song_status = song_info['artist']+" // "+song_info['title']
+except Exception:
+    song_status = "ncmpcpp is not currently running"
 
 # Time
 now = str(strftime("%I:%M"))
@@ -33,8 +37,8 @@ hostname = " chris@air.local"
 # Battery left
 battery = os.popen("pmset -g batt | grep -o '[0-9]*%'").read().strip()
 
-build_segment(left, " chris@air.local")
-build_segment(center, song_info['artist']+' // '+song_info['title'])
+build_segment(left, hostname)
+build_segment(center, song_status)
 build_segment(right, battery + " | " + now + " ")
 
 build_bar()
